@@ -100,6 +100,7 @@ class YTDLPStrategy:
         
         # Detect content type
         is_story = '/stories/' in url
+        is_post = '/p/' in url or '/reel/' in url
         
         # Base options
         ydl_opts = {
@@ -126,20 +127,21 @@ class YTDLPStrategy:
                 
                 # Check if it's a playlist (carousel)
                 if 'entries' in info:
-                    print(f"Found carousel/post with {len(info['entries'])} items")
+                    entries_count = len(info['entries'])
+                    print(f"Found carousel/post with {entries_count} items")
                     
-                    # If it's empty, it might be a single image
-                    if len(info['entries']) == 0:
-                        # Try to download as single item
+                    if entries_count == 0:
+                        # This might be a single image - try downloading directly
+                        print("No items found, trying direct download...")
                         info = ydl.extract_info(url, download=True)
                     else:
-                        # Download the first item (or you could download all)
+                        # Download the first item
                         first_entry = info['entries'][0]
-                        # Extract the URL properly
                         if 'url' in first_entry:
                             item_url = first_entry['url']
                         else:
-                            item_url = url
+                            # Try to get the URL from the entry
+                            item_url = first_entry.get('webpage_url', url)
                         info = ydl.extract_info(item_url, download=True)
                 else:
                     # Single item - download directly
@@ -189,8 +191,11 @@ class YTDLPStrategy:
                 error_msg = str(e)
                 if "two-factor" in error_msg.lower():
                     raise Exception("2FA required - please use cookies file instead")
-                elif "login" in error_msg.lower():
-                    raise Exception("Login required - cookies may be expired. Please refresh your cookies.")
+                elif "login" in error_msg.lower() or "log in" in error_msg.lower():
+                    if is_story:
+                        raise Exception("This story requires login. Make sure you follow this account and the story is still active.")
+                    else:
+                        raise Exception("Login required - cookies may be expired. Please refresh your cookies.")
                 elif "format" in error_msg.lower():
                     # Try a simpler format
                     try:
@@ -212,6 +217,6 @@ class YTDLPStrategy:
                             'ext': 'mp4' if is_video else 'jpg'
                         }
                     except:
-                        raise Exception(f"yt-dlp failed: {error_msg}")
+                        raise Exception(f"Download failed: {error_msg}")
                 else:
-                    raise Exception(f"yt-dlp failed: {error_msg}")
+                    raise Exception(f"Download failed: {error_msg}")
