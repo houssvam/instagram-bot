@@ -1,4 +1,4 @@
 # Netscape HTTP Cookie File
-.instagram.com    TRUE    /    FALSE    1735689600    sessionid    72087654141%3ADLIQU383DUqwDR%3A14%3AAYgbRVIDemayhFdCtd7PIBfWzk3vOZqm-0BBdB8edA
-.instagram.com    TRUE    /    FALSE    1735689600    ds_user_id    72087654141
-.instagram.com    TRUE    /    FALSE    1735689600    csrftoken    5JrQAb5ernVv1MlWmtmAvQgfj7KsT3cB
+.instagram.com	TRUE	/	FALSE	1735689600	sessionid	72087654141%3ADLIQU383DUqwDR%3A14%3AAYgbRVIDemayhFdCtd7PIBfWzk3vOZqm-0BBdB8edA
+.instagram.com	TRUE	/	FALSE	1735689600	ds_user_id	72087654141
+.instagram.com	TRUE	/	FALSE	1735689600	csrftoken	5JrQAb5ernVv1MlWmtmAvQgfj7KsT3cB
