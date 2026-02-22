@@ -1,0 +1,21 @@
+﻿# Core
+aiohttp>=3.9.0
+asyncio>=3.4.3
+python-telegram-bot>=20.6
+python-dotenv>=1.0.0
+
+# Download engines
+yt-dlp>=2023.12.30
+instaloader>=4.10
+
+# Terminal UI
+rich>=13.7.0
+prompt-toolkit>=3.0.43
+psutil>=5.9.0
+
+# Security
+cryptography>=41.0.0
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
